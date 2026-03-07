@@ -1,0 +1,5 @@
+{
+  "name": "ASHA Sathi: Symptom Triage Assistant",
+  "description": "A conversational AI assistant for ASHA workers in rural India to triage patient symptoms using WHO IMCI logic in Hindi and English.",
+  "requestFramePermissions": []
+}

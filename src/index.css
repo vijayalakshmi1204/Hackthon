@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Font family is defined in :root */
+
+:root {
+  --bg: hsl(210, 30%, 96%);
+  --card: hsla(0, 0%, 100%, 0.85);
+  --primary: hsl(210, 20%, 20%);
+  --accent: hsl(210, 100%, 55%);
+  --secondary: hsl(340, 80%, 60%);
+  --red: hsl(0, 80%, 60%);
+  --yellow: hsl(40, 90%, 55%);
+  --green: hsl(150, 70%, 45%);
+  --glass-bg: rgba(255,255,255,0.12);
+  --glass-border: rgba(255,255,255,0.2);
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--primary);
+  font-family: var(--font-sans);
+}
+
+.chat-container {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  padding: 1rem;
+}
+
+.message-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  background: var(--card);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.message-user {
+  align-self: flex-end;
+  background-color: var(--accent);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message-model {
+  align-self: flex-start;
+  background-color: var(--card);
+  border: 1px solid #E2E8F0;
+  border-bottom-left-radius: 4px;
+}
+
+.red-flag {
+  border: 2px solid var(--red);
+  background-color: #FEF2F2;
+}
+
+.triage-card {
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 16px;
+  background: var(--card);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.08);
+  backdrop-filter: blur(6px);
+}
+
+.risk-green { border-left: 8px solid var(--green); }
+.risk-yellow { border-left: 8px solid var(--yellow); }
+.risk-red { border-left: 8px solid var(--red); }
+
