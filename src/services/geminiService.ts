@@ -51,7 +51,7 @@ export class GeminiService {
   async getNextResponse(history: ChatMessage[], language: Language): Promise<ChatMessage> {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!apiKey) {
-      return { role: 'model', text: "API Key (VITE_GEMINI_API_KEY) is missing in .env. Please add it to use the assistant." };
+      return { id: Date.now().toString(), role: 'model', text: "API Key (VITE_GEMINI_API_KEY) is missing in .env. Please add it to use the assistant." };
     }
 
     // gemini-2.5-flash has an active free tier quota for this account!
@@ -104,14 +104,28 @@ export class GeminiService {
 
       // Parse JSON from the AI response
       let parsed: any = {};
+      let cleanText = "";
+      
       try {
         const jsonMatch = text.match(/\{[\s\S]*\}/);
-        parsed = JSON.parse(jsonMatch ? jsonMatch[0] : text);
+        if (jsonMatch) {
+          parsed = JSON.parse(jsonMatch[0]);
+          // If we have a JSON object, try to find a human-readable part
+          cleanText = parsed.explanation || parsed.text || parsed.recommendation || "";
+        }
       } catch (e) {
         console.warn("Failed to parse AI response as JSON:", text);
-        parsed = { text };
+      }
+
+      // If we couldn't find clean text in the JSON, or there was no JSON,
+      // use the text itself but strip the JSON block out for the UI
+      if (!cleanText) {
+        cleanText = text.replace(/\{[\s\S]*\}/g, "").trim();
       }
       
+      // Final fallback
+      if (!cleanText) cleanText = "Assessment complete. See details below.";
+
       const mappedTriageReport = parsed.triageReport || (parsed.triage_classification ? {
         riskLevel: parsed.triage_classification,
         patientSummary: `${parsed.name || 'Patient'}, Age: ${parsed.age || 'N/A'}, Gender: ${parsed.gender || 'N/A'}` ,
@@ -121,14 +135,16 @@ export class GeminiService {
       } : undefined);
 
       return {
+        id: Date.now().toString(),
         role: 'model',
-        text: parsed.explanation || parsed.text || text,
+        text: cleanText,
         isRedFlag: parsed.triage_classification === 'RED' || parsed.isRedFlag,
         triageReport: mappedTriageReport
       };
     } catch (error: any) {
       console.error("Gemini API Error:", error);
       return {
+        id: Date.now().toString(),
         role: 'model',
         text: `Error: ${error.message || "Something went wrong while connecting to the AI."}`
       };

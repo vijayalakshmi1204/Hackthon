@@ -10,6 +10,7 @@ export interface PatientData {
 }
 
 export interface ChatMessage {
+  id: string;
   role: 'user' | 'model';
   text: string;
   isRedFlag?: boolean;

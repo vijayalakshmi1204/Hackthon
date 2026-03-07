@@ -1,86 +1,121 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;700&display=swap');
 
-/* Font family is defined in :root */
-
-:root {
-  --bg: hsl(210, 30%, 96%);
-  --card: hsla(0, 0%, 100%, 0.85);
-  --primary: hsl(210, 20%, 20%);
-  --accent: hsl(210, 100%, 55%);
-  --secondary: hsl(340, 80%, 60%);
-  --red: hsl(0, 80%, 60%);
-  --yellow: hsl(40, 90%, 55%);
-  --green: hsl(150, 70%, 45%);
-  --glass-bg: rgba(255,255,255,0.12);
-  --glass-border: rgba(255,255,255,0.2);
-  --font-sans: 'Inter', sans-serif;
+@theme {
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', 'Noto Sans Devanagari', sans-serif;
+  
+  --color-medical-blue: #0ea5e9;
+  --color-medical-dark: #0f172a;
+  --color-medical-light: #f8fafc;
 }
 
-/* Glassmorphism utility */
-.glass {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 12px;
+:root {
+  --bg-subtle: #f1f5f9;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--primary);
-  font-family: var(--font-sans);
+  background-color: var(--bg-subtle);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.05) 0, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(37, 99, 235, 0.05) 0, transparent 50%);
+  font-family: var(--font-body);
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
 }
 
-.chat-container {
-  max-width: 600px;
+.proper-container {
+  max-width: 900px;
   margin: 0 auto;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
-  padding: 1rem;
+  background: white;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.02);
 }
 
-.message-bubble {
-  max-width: 85%;
-  padding: 12px 16px;
-  border-radius: 16px;
-  margin-bottom: 8px;
-  line-height: 1.5;
-  background: var(--card);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+@media (min-width: 768px) {
+  .proper-container {
+    height: calc(100vh - 40px);
+    margin: 20px auto;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
 }
 
-.message-user {
-  align-self: flex-end;
-  background-color: var(--accent);
+.premium-header {
+  border-bottom: 1px solid #f1f5f9;
+  z-index: 20;
+}
+
+.bubble-system {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 20px 20px 20px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.bubble-user {
+  background: var(--accent-gradient);
   color: white;
-  border-bottom-right-radius: 4px;
+  border-radius: 20px 20px 4px 20px;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
 }
 
-.message-model {
-  align-self: flex-start;
-  background-color: var(--card);
-  border: 1px solid #E2E8F0;
-  border-bottom-left-radius: 4px;
+.triage-card-premium {
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
 }
 
-.red-flag {
-  border: 2px solid var(--red);
-  background-color: #FEF2F2;
+.input-pill {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
 }
 
-.triage-card {
-  border-radius: 20px;
-  padding: 24px;
-  margin-top: 16px;
-  background: var(--card);
-  box-shadow: 0 8px 12px rgba(0,0,0,0.08);
-  backdrop-filter: blur(6px);
+.input-pill:focus-within {
+  border-color: #0ea5e9;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
 }
 
-.risk-green { border-left: 8px solid var(--green); }
-.risk-yellow { border-left: 8px solid var(--yellow); }
-.risk-red { border-left: 8px solid var(--red); }
+.send-button-premium {
+  background: var(--accent-gradient);
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.send-button-premium:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.brand-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-heading);
+}
+
+/* Animations for messages */
+.message-appear {
+  animation: fadeInDown 0.4s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
