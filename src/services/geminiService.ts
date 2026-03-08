@@ -54,8 +54,8 @@ export class GeminiService {
       return { id: Date.now().toString(), role: 'model', text: "API Key (VITE_GEMINI_API_KEY) is missing in .env. Please add it to use the assistant." };
     }
 
-    // Switching to 1.5-flash to resolve 2.5-flash quota limits
-    const model = "gemini-1.5-flash"; 
+    // Using 2.0-flash-lite for best free-tier availability and quota
+    const model = "gemini-2.0-flash-lite"; 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     
     // Merge system instruction into the conversation context for better compatibility
